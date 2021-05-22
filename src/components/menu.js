@@ -110,7 +110,7 @@ export default function MenuDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Persistent drawer
+            D'alsun Khmir   
           </Typography>
         </Toolbar>
       </AppBar>
