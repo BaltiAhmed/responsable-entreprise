@@ -1,11 +1,14 @@
 import React from "react";
 import { Authcontext } from "./context/auth-context";
 import { UserAuth } from "./hooks/Auth-houks";
-import { Route, BrowserRouter } from "react-router-dom";
+import { Route, BrowserRouter, Redirect } from "react-router-dom";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import NavLogin from "./components/nav-login";
-import MenuDrawer from './components/menu'
+import MenuDrawer from "./components/menu";
+import AjoutSerice from "./pages/services/ajout-service";
+import ListeService from "./pages/services/liste-service";
+import UpdateService from "./pages/services/update-service";
 
 function App() {
   const { user, token, login, logout } = UserAuth();
@@ -14,12 +17,16 @@ function App() {
     routes = (
       <React.Fragment>
         <Route path="/" exact component={Home} />
+        <Route path="/liste-service" component={ListeService} />
+        <Route path="/ajout-service" component={AjoutSerice} />
+        <Route path="/update-service/:id" component={UpdateService} />
       </React.Fragment>
     );
   } else {
     routes = (
       <React.Fragment>
         <Route path="/" exact component={Login} />
+        <Redirect to="/" />
       </React.Fragment>
     );
   }
