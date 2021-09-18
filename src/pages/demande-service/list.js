@@ -10,12 +10,12 @@ import Paper from "@material-ui/core/Paper";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import TablePagination from "@material-ui/core/TablePagination";
-import ErrorModel from "../models/error-models";
-import SuccessModel from "../models/success-models";
+import ErrorModel from "../../models/error-models";
+import SuccessModel from "../../models/success-models";
 import NaturePeopleIcon from "@material-ui/icons/NaturePeople";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
-import AgriculteurModal from "../components/demande-service/agriculteur-modal";
-import ServiceModal from "../components/demande-service/service-modal";
+import AgriculteurModal from "../../components/demande-service/agriculteur-modal";
+import ServiceModal from "../../components/demande-service/service-modal";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Home() {
+export default function ListDemandeAchat() {
   const classes = useStyles();
 
   const [page, setPage] = React.useState(0);
@@ -62,14 +62,16 @@ export default function Home() {
   useEffect(() => {
     const sendRequest = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/agriculteur/`);
+        const response = await fetch(
+          `http://localhost:5000/api/demandeService/`
+        );
 
         const responseData = await response.json();
         if (!response.ok) {
           throw new Error(responseData.message);
         }
 
-        setList(responseData.agriculteur);
+        setList(responseData.demandeService);
       } catch (err) {
         seterror(err.message);
       }
@@ -115,13 +117,11 @@ export default function Home() {
             <Table className={classes.table} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>Nom</StyledTableCell>
+                  <StyledTableCell>Nombre de jour</StyledTableCell>
 
-                  <StyledTableCell align="right">Prenom</StyledTableCell>
+                  <StyledTableCell align="right">Prix</StyledTableCell>
 
-                  <StyledTableCell align="right">Tel</StyledTableCell>
-                  <StyledTableCell align="right">Email </StyledTableCell>
-                  <StyledTableCell align="right">Adresse </StyledTableCell>
+                  <StyledTableCell align="right">Action</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -129,19 +129,61 @@ export default function Home() {
                   list
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => (
-                      <StyledTableRow key={row.nom}>
-                        <StyledTableCell>{row.nom}</StyledTableCell>
+                      <StyledTableRow key={row.name}>
+                        <StyledTableCell>{row.nbrJour}</StyledTableCell>
                         <StyledTableCell align="right">
-                          {row.prenom}
+                          {row.prix}
                         </StyledTableCell>
+
                         <StyledTableCell align="right">
-                          {row.tel}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {row.email}
-                        </StyledTableCell>
-                        <StyledTableCell align="right">
-                          {row.adresse}
+                          <NaturePeopleIcon
+                            onClick={() =>
+                              showModalAgriculteur(row.Agriculteur)
+                            }
+                            style={{ color: "green" }}
+                            fontSize="large"
+                          />
+
+                          <HelpOutlineIcon
+                            onClick={() => showModalService(row.Service)}
+                            style={{ color: "yellow" }}
+                            fontSize="large"
+                          />
+
+                          {row.finished && (
+                            <ThumbUpIcon
+                              style={{ color: "#4fc3f7" }}
+                              fontSize="large"
+                              onClick={async (event) => {
+                                try {
+                                  let response = await fetch(
+                                    `http://localhost:5000/api/demandeService/${row._id}`,
+                                    {
+                                      method: "PATCH",
+                                      headers: {
+                                        "Content-Type": "application/json",
+                                      },
+                                      body: JSON.stringify({
+                                        idAgriculteur: row.Agriculteur,
+                                        idService: row.Service,
+                                      }),
+                                    }
+                                  );
+                                  let responsedata = await response.json();
+                                  if (!response.ok) {
+                                    seterror(responsedata.message);
+                                    throw new Error(responsedata.message);
+                                  }
+                                  setsuccess(
+                                    "Un Email de confirmation sera envoyer à l'agriculteur"
+                                  );
+                                } catch (err) {
+                                  console.log(err);
+                                  seterror(err.message || "probleme!!");
+                                }
+                              }}
+                            />
+                          )}
                         </StyledTableCell>
                       </StyledTableRow>
                     ))}

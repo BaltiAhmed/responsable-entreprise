@@ -19,6 +19,8 @@ import NaturePeopleIcon from "@material-ui/icons/NaturePeople";
 import TransferWithinAStationIcon from "@material-ui/icons/TransferWithinAStation";
 import { Link } from "react-router-dom";
 import SimpleMenu from "./NavBarMenu";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 
 const drawerWidth = 240;
 
@@ -114,12 +116,8 @@ export default function MenuDrawer(props) {
           <Typography variant="h6" noWrap>
             D'alsun Khmir
           </Typography>
-          <SimpleMenu/>
+          <SimpleMenu />
         </Toolbar>
-        
-        
-        
-        
       </AppBar>
       <Drawer
         className={classes.drawer}
@@ -141,10 +139,7 @@ export default function MenuDrawer(props) {
         </div>
         <Divider />
         <List>
-          <Link
-            to="/"
-            style={{ textDecoration: "none", color: "black" }}
-          >
+          <Link to="/" style={{ textDecoration: "none", color: "black" }}>
             <ListItem button>
               <ListItemIcon>
                 <NaturePeopleIcon style={{ color: "green" }} fontSize="large" />
@@ -164,6 +159,29 @@ export default function MenuDrawer(props) {
                 />
               </ListItemIcon>
               <ListItemText primary="Gestion des services" />
+            </ListItem>
+          </Link>
+
+          <Link
+            to="/list-demande-achat"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItem button>
+              <ListItemIcon>
+                <HelpOutlineIcon style={{ color: "yellow" }} fontSize="large" />
+              </ListItemIcon>
+              <ListItemText primary="Demande de service" />
+            </ListItem>
+          </Link>
+          <Link
+            to="/list-demande-produit"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItem button>
+              <ListItemIcon>
+                <ProductionQuantityLimitsIcon style={{ color: "blue" }} fontSize="large" />
+              </ListItemIcon>
+              <ListItemText primary="Demande de vente produit" />
             </ListItem>
           </Link>
         </List>

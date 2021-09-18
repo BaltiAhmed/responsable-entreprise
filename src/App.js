@@ -9,6 +9,8 @@ import MenuDrawer from "./components/menu";
 import AjoutSerice from "./pages/services/ajout-service";
 import ListeService from "./pages/services/liste-service";
 import UpdateService from "./pages/services/update-service";
+import ListDemandeAchat from "./pages/demande-service/list";
+import ListDemandeProduit from "./pages/demande-produit/list";
 
 function App() {
   const { user, token, login, logout } = UserAuth();
@@ -20,6 +22,8 @@ function App() {
         <Route path="/liste-service" component={ListeService} />
         <Route path="/ajout-service" component={AjoutSerice} />
         <Route path="/update-service/:id" component={UpdateService} />
+        <Route path="/list-demande-achat" component={ListDemandeAchat} />
+        <Route path="/list-demande-produit" component={ListDemandeProduit} />
       </React.Fragment>
     );
   } else {
