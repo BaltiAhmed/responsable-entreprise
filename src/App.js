@@ -11,6 +11,8 @@ import ListeService from "./pages/services/liste-service";
 import UpdateService from "./pages/services/update-service";
 import ListDemandeAchat from "./pages/demande-service/list";
 import ListDemandeProduit from "./pages/demande-produit/list";
+import ListProduitFinal from "./pages/produit-final/list-produit";
+import AjoutProduit from "./pages/produit-final/ajout-produit";
 
 function App() {
   const { user, token, login, logout } = UserAuth();
@@ -24,6 +26,8 @@ function App() {
         <Route path="/update-service/:id" component={UpdateService} />
         <Route path="/list-demande-achat" component={ListDemandeAchat} />
         <Route path="/list-demande-produit" component={ListDemandeProduit} />
+        <Route path="/list-produit-final" component={ListProduitFinal} />
+        <Route path="/ajout-produit-final" component={AjoutProduit} />
       </React.Fragment>
     );
   } else {

@@ -184,6 +184,18 @@ export default function MenuDrawer(props) {
               <ListItemText primary="Demande de vente produit" />
             </ListItem>
           </Link>
+
+          <Link
+            to="/list-produit-final"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItem button>
+              <ListItemIcon>
+                <ProductionQuantityLimitsIcon style={{ color: "blue" }} fontSize="large" />
+              </ListItemIcon>
+              <ListItemText primary="Produit final" />
+            </ListItem>
+          </Link>
         </List>
         <Divider />
       </Drawer>

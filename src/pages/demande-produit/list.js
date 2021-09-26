@@ -16,6 +16,7 @@ import NaturePeopleIcon from "@material-ui/icons/NaturePeople";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import AgriculteurModal from "../../components/demande-service/agriculteur-modal";
 import ServiceModal from "../../components/demande-service/service-modal";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -62,9 +63,7 @@ export default function ListDemandeProduit() {
   useEffect(() => {
     const sendRequest = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:5000/api/produit/`
-        );
+        const response = await fetch(`http://localhost:5000/api/produit/`);
 
         const responseData = await response.json();
         if (!response.ok) {
@@ -79,7 +78,7 @@ export default function ListDemandeProduit() {
 
     sendRequest();
   }, []);
-  console.log(list)
+  console.log(list);
 
   const [modalAgriculteur, setModalAgriculteur] = React.useState(false);
   const [modalService, setModalService] = React.useState(false);
@@ -87,14 +86,11 @@ export default function ListDemandeProduit() {
   const [serviceId, setServiceId] = useState(null);
 
   const showModalAgriculteur = (id) => {
+    
     setAgriculteurId(id);
     setModalAgriculteur(true);
   };
-
-  const showModalService = (id) => {
-    setServiceId(id);
-    setModalService(true);
-  };
+  console.log(agriculteurId)
 
   return (
     <Container>
@@ -135,7 +131,12 @@ export default function ListDemandeProduit() {
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => (
                       <StyledTableRow key={row.name}>
-                        <StyledTableCell><Image style={{width:'50px',height:'50px'}} src={`http://localhost:5000/${row.image}`} /></StyledTableCell>
+                        <StyledTableCell>
+                          <Image
+                            style={{ width: "50px", height: "50px" }}
+                            src={`http://localhost:5000/${row.image}`}
+                          />
+                        </StyledTableCell>
                         <StyledTableCell>{row.nom}</StyledTableCell>
                         <StyledTableCell>{row.region}</StyledTableCell>
                         <StyledTableCell>{row.prix}</StyledTableCell>
@@ -161,6 +162,40 @@ export default function ListDemandeProduit() {
                                 try {
                                   let response = await fetch(
                                     `http://localhost:5000/api/produit/${row._id}`,
+                                    {
+                                      method: "PATCH",
+                                      headers: {
+                                        "Content-Type": "application/json",
+                                      },
+                                      body: JSON.stringify({
+                                        idAgriculteur: row.Agriculteur,
+                                      }),
+                                    }
+                                  );
+                                  let responsedata = await response.json();
+                                  if (!response.ok) {
+                                    seterror(responsedata.message);
+                                    throw new Error(responsedata.message);
+                                  }
+                                  setsuccess(
+                                    "Un Email de confirmation sera envoyer à l'agriculteur"
+                                  );
+                                } catch (err) {
+                                  console.log(err);
+                                  seterror(err.message || "probleme!!");
+                                }
+                              }}
+                            />
+                          )}
+
+                          {!row.finished && (
+                            <CancelIcon
+                              style={{ color: "red" }}
+                              fontSize="large"
+                              onClick={async (event) => {
+                                try {
+                                  let response = await fetch(
+                                    `http://localhost:5000/api/produit/refu/${row._id}`,
                                     {
                                       method: "PATCH",
                                       headers: {

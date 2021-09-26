@@ -26,6 +26,7 @@ const AgriculteurModal = (props) => {
 
     sendRequest();
   }, [props.id]);
+  console.log(props.id)
 
   return (
     <Modal
