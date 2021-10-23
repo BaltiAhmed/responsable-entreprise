@@ -143,7 +143,7 @@ export default function ListProduitFinal() {
                             onClick={async (event) => {
                               try {
                                 let response = await fetch(
-                                  `http://localhost:5000/api/evenement/${row._id}`,
+                                  `http://localhost:5000/api/produitfinal/${row._id}`,
                                   {
                                     method: "DELETE",
                                     headers: {
@@ -158,7 +158,7 @@ export default function ListProduitFinal() {
                                 setList(
                                   list.filter((el) => el._id !== row._id)
                                 );
-                                setsuccess("Evenement bien suprimer");
+                                setsuccess("Produit bien suprimer");
                               } catch (err) {
                                 console.log(err);
                                 seterror(err.message || "il y a un probleme");
