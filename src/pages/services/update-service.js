@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import ErrorModel from "../../models/error-models";
 import SuccessModel from "../../models/success-models";
-import {useParams} from 'react-router-dom'
+import { useParams } from "react-router-dom";
 
 const UpdateService = (props) => {
   const [nom, setNom] = useState();
@@ -23,8 +23,8 @@ const UpdateService = (props) => {
       setDescription(e.target.value);
     }
   };
- 
-  const id = useParams().id
+
+  const id = useParams().id;
   const submit = async (e) => {
     e.preventDefault();
 
@@ -53,6 +53,30 @@ const UpdateService = (props) => {
     }
   };
 
+  useEffect(() => {
+    const sendRequest = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/produitfinal/${id}`
+        );
+
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+
+        setNom(responseData.produit.nom);
+        setPrix(responseData.produit.nom);
+        setType(responseData.produit.nom);
+        setDescription(responseData.produit.nom);
+      } catch (err) {
+        seterror(err.message);
+      }
+    };
+
+    sendRequest();
+  }, []);
+
   return (
     <div>
       <Container>
@@ -66,6 +90,7 @@ const UpdateService = (props) => {
                 <Form.Group as={Col} controlId="formGridEmail">
                   <Form.Label>Nom</Form.Label>
                   <Form.Control
+                    value={nom}
                     placeholder="nom"
                     name="nom"
                     onChange={onchange}
@@ -76,6 +101,7 @@ const UpdateService = (props) => {
                 <Form.Group as={Col} controlId="formGridPassword">
                   <Form.Label>Type</Form.Label>
                   <Form.Control
+                    value={type}
                     as="select"
                     defaultValue="Choose..."
                     name="type"
@@ -91,6 +117,7 @@ const UpdateService = (props) => {
               <Form.Group controlId="formGridAddress1">
                 <Form.Label>Prix</Form.Label>
                 <Form.Control
+                  value={prix}
                   placeholder="prix"
                   type="number"
                   name="prix"
@@ -102,6 +129,7 @@ const UpdateService = (props) => {
               <Form.Group controlId="exampleForm.ControlTextarea1">
                 <Form.Label>Description</Form.Label>
                 <Form.Control
+                  value={description}
                   as="textarea"
                   rows={5}
                   name="description"

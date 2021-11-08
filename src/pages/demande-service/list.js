@@ -16,6 +16,7 @@ import NaturePeopleIcon from "@material-ui/icons/NaturePeople";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import AgriculteurModal from "../../components/demande-service/agriculteur-modal";
 import ServiceModal from "../../components/demande-service/service-modal";
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -120,6 +121,7 @@ export default function ListDemandeAchat() {
                   <StyledTableCell>Nombre de jour</StyledTableCell>
 
                   <StyledTableCell align="right">Prix</StyledTableCell>
+                  <StyledTableCell align="right">Décision</StyledTableCell>
 
                   <StyledTableCell align="right">Action</StyledTableCell>
                 </TableRow>
@@ -132,7 +134,10 @@ export default function ListDemandeAchat() {
                       <StyledTableRow key={row.name}>
                         <StyledTableCell>{row.nbrJour}</StyledTableCell>
                         <StyledTableCell align="right">
-                          {row.prix}
+                          {row.prix}DT
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {row.decision}
                         </StyledTableCell>
 
                         <StyledTableCell align="right">
@@ -150,39 +155,74 @@ export default function ListDemandeAchat() {
                             fontSize="large"
                           />
 
-                          {row.finished && (
-                            <ThumbUpIcon
-                              style={{ color: "#4fc3f7" }}
-                              fontSize="large"
-                              onClick={async (event) => {
-                                try {
-                                  let response = await fetch(
-                                    `http://localhost:5000/api/demandeService/${row._id}`,
-                                    {
-                                      method: "PATCH",
-                                      headers: {
-                                        "Content-Type": "application/json",
-                                      },
-                                      body: JSON.stringify({
-                                        idAgriculteur: row.Agriculteur,
-                                        idService: row.Service,
-                                      }),
+                          {!row.finished && (
+                            <div>
+                              <HighlightOffIcon
+                                style={{ color: "red" }}
+                                fontSize="large"
+                                onClick={async (event) => {
+                                  try {
+                                    let response = await fetch(
+                                      `http://localhost:5000/api/demandeService/refus/${row._id}`,
+                                      {
+                                        method: "PATCH",
+                                        headers: {
+                                          "Content-Type": "application/json",
+                                        },
+                                        body: JSON.stringify({
+                                          idAgriculteur: row.Agriculteur,
+                                          idService: row.Service,
+                                        }),
+                                      }
+                                    );
+                                    let responsedata = await response.json();
+                                    if (!response.ok) {
+                                      seterror(responsedata.message);
+                                      throw new Error(responsedata.message);
                                     }
-                                  );
-                                  let responsedata = await response.json();
-                                  if (!response.ok) {
-                                    seterror(responsedata.message);
-                                    throw new Error(responsedata.message);
+                                    setsuccess(
+                                      "Un Email de confirmation sera envoyer à l'agriculteur"
+                                    );
+                                  } catch (err) {
+                                    console.log(err);
+                                    seterror(err.message || "probleme!!");
                                   }
-                                  setsuccess(
-                                    "Un Email de confirmation sera envoyer à l'agriculteur"
-                                  );
-                                } catch (err) {
-                                  console.log(err);
-                                  seterror(err.message || "probleme!!");
-                                }
-                              }}
-                            />
+                                }}
+                              />
+
+                              <ThumbUpIcon
+                                style={{ color: "#4fc3f7" }}
+                                fontSize="large"
+                                onClick={async (event) => {
+                                  try {
+                                    let response = await fetch(
+                                      `http://localhost:5000/api/demandeService/${row._id}`,
+                                      {
+                                        method: "PATCH",
+                                        headers: {
+                                          "Content-Type": "application/json",
+                                        },
+                                        body: JSON.stringify({
+                                          idAgriculteur: row.Agriculteur,
+                                          idService: row.Service,
+                                        }),
+                                      }
+                                    );
+                                    let responsedata = await response.json();
+                                    if (!response.ok) {
+                                      seterror(responsedata.message);
+                                      throw new Error(responsedata.message);
+                                    }
+                                    setsuccess(
+                                      "Un Email de confirmation sera envoyer à l'agriculteur"
+                                    );
+                                  } catch (err) {
+                                    console.log(err);
+                                    seterror(err.message || "probleme!!");
+                                  }
+                                }}
+                              />
+                            </div>
                           )}
                         </StyledTableCell>
                       </StyledTableRow>

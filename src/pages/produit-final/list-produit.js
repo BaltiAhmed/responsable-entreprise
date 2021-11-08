@@ -135,7 +135,7 @@ export default function ListProduitFinal() {
                           {row.description}
                         </StyledTableCell>
                         <StyledTableCell align="right">
-                          <Link to={`/update-evenement/${row._id}`}>
+                          <Link to={`/update-produit-final/${row._id}`}>
                             <UpdateIcon style={{ color: "green" }} />
                           </Link>
                           <DeleteForeverIcon

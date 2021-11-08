@@ -50,7 +50,7 @@ export default function SimpleMenu() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        
         <MenuItem
           onClick={() => {
             auth.logout();

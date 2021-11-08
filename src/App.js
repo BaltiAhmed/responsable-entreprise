@@ -13,6 +13,7 @@ import ListDemandeAchat from "./pages/demande-service/list";
 import ListDemandeProduit from "./pages/demande-produit/list";
 import ListProduitFinal from "./pages/produit-final/list-produit";
 import AjoutProduit from "./pages/produit-final/ajout-produit";
+import UpdateProduit from "./pages/produit-final/update-produit";
 
 function App() {
   const { user, token, login, logout } = UserAuth();
@@ -28,6 +29,7 @@ function App() {
         <Route path="/list-demande-produit" component={ListDemandeProduit} />
         <Route path="/list-produit-final" component={ListProduitFinal} />
         <Route path="/ajout-produit-final" component={AjoutProduit} />
+        <Route path="/update-produit-final/:id" component={UpdateProduit} />
       </React.Fragment>
     );
   } else {
