@@ -40,7 +40,7 @@ function App() {
     routes = (
       <React.Fragment>
         <Route path="/" exact component={Login} />
-        
+        <Redirect to="/" />
       </React.Fragment>
     );
   }
