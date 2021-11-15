@@ -14,6 +14,8 @@ import ListDemandeProduit from "./pages/demande-produit/list";
 import ListProduitFinal from "./pages/produit-final/list-produit";
 import AjoutProduit from "./pages/produit-final/ajout-produit";
 import UpdateProduit from "./pages/produit-final/update-produit";
+import ListCommande from "./pages/commande/ListCommande";
+import DetailCommande from "./pages/commande/detailsCommande";
 
 function App() {
   const { user, token, login, logout } = UserAuth();
@@ -30,13 +32,15 @@ function App() {
         <Route path="/list-produit-final" component={ListProduitFinal} />
         <Route path="/ajout-produit-final" component={AjoutProduit} />
         <Route path="/update-produit-final/:id" component={UpdateProduit} />
+        <Route path="/commande" component={ListCommande} />
+        <Route path="/detailCommande/:id" component={DetailCommande} />
       </React.Fragment>
     );
   } else {
     routes = (
       <React.Fragment>
         <Route path="/" exact component={Login} />
-        <Redirect to="/" />
+        
       </React.Fragment>
     );
   }
