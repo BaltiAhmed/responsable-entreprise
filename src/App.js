@@ -16,6 +16,8 @@ import AjoutProduit from "./pages/produit-final/ajout-produit";
 import UpdateProduit from "./pages/produit-final/update-produit";
 import ListCommande from "./pages/commande/ListCommande";
 import DetailCommande from "./pages/commande/detailsCommande";
+import ListCategorie from "./pages/categories/ListCategorie";
+import ChartsPage from "./pages/dashbord";
 
 function App() {
   const { user, token, login, logout } = UserAuth();
@@ -23,7 +25,7 @@ function App() {
   if (token) {
     routes = (
       <React.Fragment>
-        <Route path="/" exact component={Home} />
+        <Route path="/agriculteur"  component={Home} />
         <Route path="/liste-service" component={ListeService} />
         <Route path="/ajout-service" component={AjoutSerice} />
         <Route path="/update-service/:id" component={UpdateService} />
@@ -34,6 +36,8 @@ function App() {
         <Route path="/update-produit-final/:id" component={UpdateProduit} />
         <Route path="/commande" component={ListCommande} />
         <Route path="/detailCommande/:id" component={DetailCommande} />
+        <Route path="/list-categorie" component={ListCategorie} />
+        <Route path="/" exact component={ChartsPage} />
       </React.Fragment>
     );
   } else {

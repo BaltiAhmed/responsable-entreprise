@@ -103,6 +103,7 @@ export default function ListProduitFinal() {
                   <StyledTableCell align="right">Rgion</StyledTableCell>
                   <StyledTableCell align="right">Prix</StyledTableCell>
                   <StyledTableCell align="right">Quantité</StyledTableCell>
+                  <StyledTableCell align="right">Categorie</StyledTableCell>
                   <StyledTableCell align="right">Description</StyledTableCell>
                   <StyledTableCell align="right">Action</StyledTableCell>
                 </TableRow>
@@ -130,6 +131,9 @@ export default function ListProduitFinal() {
                         </StyledTableCell>
                         <StyledTableCell align="right">
                           {row.quantite}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {row.categorie}
                         </StyledTableCell>
                         <StyledTableCell align="right">
                           {row.description}

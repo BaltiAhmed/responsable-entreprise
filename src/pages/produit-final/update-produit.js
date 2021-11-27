@@ -142,6 +142,27 @@ const UpdateProduit = (props) => {
     sendRequest();
   }, []);
 
+  const [list, setList] = useState();
+
+  useEffect(() => {
+    const sendRequest = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/categorie/`);
+
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+
+        setList(responseData.existingCategorie);
+      } catch (err) {
+        seterror(err.message);
+      }
+    };
+
+    sendRequest();
+  }, []);
+
   return (
     <div>
       <Container>
@@ -231,6 +252,19 @@ const UpdateProduit = (props) => {
                   onChange={onchange}
                   required
                 />
+              </Form.Group>
+
+              <Form.Group controlId="exampleForm.ControlSelect1">
+                <Form.Label>Categorie</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="categorie"
+                  onChange={onchange}
+                  required
+                >
+                  <option></option>
+                  {list && list.map((row) => <option>{row.nom}</option>)}
+                </Form.Control>
               </Form.Group>
 
               <Form.Group controlId="exampleForm.ControlTextarea1">

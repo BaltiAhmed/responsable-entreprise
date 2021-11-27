@@ -21,6 +21,8 @@ import { Link } from "react-router-dom";
 import SimpleMenu from "./NavBarMenu";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import HomeIcon from "@material-ui/icons/Home";
+
 
 const drawerWidth = 240;
 
@@ -139,7 +141,16 @@ export default function MenuDrawer(props) {
         </div>
         <Divider />
         <List>
-          <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+        <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+            <ListItem button key="">
+              <ListItemIcon>
+                {" "}
+                <HomeIcon style={{ color: "#039be5" }} />
+              </ListItemIcon>
+              <ListItemText primary="Acceuil" />
+            </ListItem>
+          </Link>
+          <Link to="/agriculteur" style={{ textDecoration: "none", color: "black" }}>
             <ListItem button>
               <ListItemIcon>
                 <NaturePeopleIcon style={{ color: "green" }} fontSize="large" />
@@ -206,6 +217,17 @@ export default function MenuDrawer(props) {
                 <ProductionQuantityLimitsIcon style={{ color: "blue" }} fontSize="large" />
               </ListItemIcon>
               <ListItemText primary="Commandes" />
+            </ListItem>
+          </Link>
+          <Link
+            to="/list-categorie"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItem button>
+              <ListItemIcon>
+                <ProductionQuantityLimitsIcon style={{ color: "blue" }} fontSize="large" />
+              </ListItemIcon>
+              <ListItemText primary="Categories Produits" />
             </ListItem>
           </Link>
         </List>

@@ -63,6 +63,7 @@ const AjoutProduit = (props) => {
   const [region, setRegion] = useState();
   const [prix, setPrix] = useState();
   const [quantite, setQuantite] = useState();
+  const [categorie, setCategorie] = useState();
   const [description, setDescription] = useState();
   const [error, seterror] = useState(false);
   const [success, setsuccess] = useState(false);
@@ -78,6 +79,8 @@ const AjoutProduit = (props) => {
       setQuantite(e.target.value);
     } else if (e.target.name === "description") {
       setDescription(e.target.value);
+    } else if (e.target.name === "categorie") {
+      setCategorie(e.target.value);
     }
   };
 
@@ -93,10 +96,14 @@ const AjoutProduit = (props) => {
       formData.append("region", region);
       formData.append("prix", prix);
       formData.append("quantite", quantite);
+      formData.append("categorie", categorie);
       formData.append("description", description);
       formData.append("IdUser", auth.user._id);
 
-      await axios.post(`http://localhost:5000/api/produitfinal/ajout`, formData);
+      await axios.post(
+        `http://localhost:5000/api/produitfinal/ajout`,
+        formData
+      );
 
       setsuccess("Produit ajouté avec succée");
       seterror(null);
@@ -105,6 +112,27 @@ const AjoutProduit = (props) => {
       setsuccess(null);
     }
   };
+
+  const [list, setList] = useState();
+
+  useEffect(() => {
+    const sendRequest = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/categorie/`);
+
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+
+        setList(responseData.existingCategorie);
+      } catch (err) {
+        seterror(err.message);
+      }
+    };
+
+    sendRequest();
+  }, []);
 
   return (
     <div>
@@ -191,6 +219,20 @@ const AjoutProduit = (props) => {
                   onChange={onchange}
                   required
                 />
+              </Form.Group>
+
+              
+              <Form.Group controlId="exampleForm.ControlSelect1">
+                <Form.Label>Categorie</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="categorie"
+                  onChange={onchange}
+                  required
+                >
+                  <option></option>
+                  {list && list.map((row) => <option>{row.nom}</option>)}
+                </Form.Control>
               </Form.Group>
 
               <Form.Group controlId="exampleForm.ControlTextarea1">
