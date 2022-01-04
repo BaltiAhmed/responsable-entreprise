@@ -18,6 +18,10 @@ import ListCommande from "./pages/commande/ListCommande";
 import DetailCommande from "./pages/commande/detailsCommande";
 import ListCategorie from "./pages/categories/ListCategorie";
 import ChartsPage from "./pages/dashbord";
+import ChatAgriculteur from "./pages/agriculteur/chat/chat";
+import ChatClient from "./pages/client/chat/chat";
+import ListAgriculteurChat from './pages/agriculteur/list'
+import ListClientChat from './pages/client/list'
 
 function App() {
   const { user, token, login, logout } = UserAuth();
@@ -37,6 +41,10 @@ function App() {
         <Route path="/commande" component={ListCommande} />
         <Route path="/detailCommande/:id" component={DetailCommande} />
         <Route path="/list-categorie" component={ListCategorie} />
+        <Route path="/chat-agriculteur/:id"  component={ChatAgriculteur} />
+        <Route path="/chat-client/:id"  component={ChatClient} />
+        <Route path="/list-client"  component={ListClientChat} />
+        <Route path="/list-agriculteur"  component={ListAgriculteurChat} />
         <Route path="/" exact component={ChartsPage} />
       </React.Fragment>
     );

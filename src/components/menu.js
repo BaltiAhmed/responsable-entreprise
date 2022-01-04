@@ -22,6 +22,7 @@ import SimpleMenu from "./NavBarMenu";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import HomeIcon from "@material-ui/icons/Home";
+import MessageIcon from "@material-ui/icons/Message";
 
 
 const drawerWidth = 240;
@@ -228,6 +229,30 @@ export default function MenuDrawer(props) {
                 <ProductionQuantityLimitsIcon style={{ color: "blue" }} fontSize="large" />
               </ListItemIcon>
               <ListItemText primary="Categories Produits" />
+            </ListItem>
+          </Link>
+
+          <Link
+            to="/list-client"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItem button>
+              <ListItemIcon>
+                <MessageIcon style={{ color: "blue" }} fontSize="large" />
+              </ListItemIcon>
+              <ListItemText primary="Nos clients" />
+            </ListItem>
+          </Link>
+
+          <Link
+            to="/list-agriculteur"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItem button>
+              <ListItemIcon>
+                <MessageIcon style={{ color: "blue" }} fontSize="large" />
+              </ListItemIcon>
+              <ListItemText primary="Nos ariculteurs" />
             </ListItem>
           </Link>
         </List>
